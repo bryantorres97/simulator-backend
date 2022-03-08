@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb://AntiFraudesUser:YZs1lF8wTRuWVAyVPv4uNzic0lwKbg5r@35.193.35.251:17027/testSimulator?authSource=admin',
+      'mongodb://AntiFraudesUser:YZs1lF8wTRuWVAyVPv4uNzic0lwKbg5r@35.193.35.251:17027/simulador?authSource=admin',
     ),
     ConfigModule.forRoot(),
     QuestionsModule,
