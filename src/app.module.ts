@@ -5,6 +5,7 @@ import { QuestionsModule } from './questions/questions.module';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { PlansModule } from './plans/plans.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot(),
     QuestionsModule,
     UsersModule,
+    PlansModule,
   ],
   controllers: [AppController],
   providers: [AppService],
