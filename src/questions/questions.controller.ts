@@ -93,7 +93,7 @@ export class QuestionsController {
   @Get('domain/:name')
   async getQuestionsByDomain(
     @Res() res: Response,
-    @Param('domain') domain: string,
+    @Param('name') domain: string,
   ) {
     try {
       const questions = await this.questionService.getQuestionsByDomain(domain);

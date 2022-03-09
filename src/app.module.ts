@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { PlansModule } from './plans/plans.module';
+import { ResponsesPerDayModule } from './responses-per-day/responses-per-day.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PlansModule } from './plans/plans.module';
     QuestionsModule,
     UsersModule,
     PlansModule,
+    ResponsesPerDayModule,
   ],
   controllers: [AppController],
   providers: [AppService],
