@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -10,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { QuestionsService } from './questions.service';
+import { getError } from 'src/common/helpers';
 
 @Controller('questions')
 export class QuestionsController {
@@ -19,9 +22,12 @@ export class QuestionsController {
   async getQuestions(@Res() res: Response) {
     try {
       const questions = await this.questionService.getQuestions();
+      if (!questions)
+        throw new NotFoundException('No se han encontrado las preguntas');
       return res.json(questions);
     } catch (error) {
-      console.log(error);
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
     }
   }
 
@@ -29,9 +35,12 @@ export class QuestionsController {
   async getQuestion(@Res() res: Response, @Param('id') id: string) {
     try {
       const question = await this.questionService.getQuestion(id);
+      if (!question)
+        throw new NotFoundException('No se ha encontrado la pregunta');
       res.json(question);
     } catch (error) {
-      console.log(error);
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
     }
   }
 
@@ -39,9 +48,12 @@ export class QuestionsController {
   async createQuestion(@Res() res: Response, @Body() body: any) {
     try {
       const question = await this.questionService.createQuestion(body);
+      if (!question)
+        throw new BadRequestException('No se pudo crear la pregunta');
       return res.json(question);
     } catch (error) {
-      console.log(error);
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
     }
   }
 
@@ -56,9 +68,12 @@ export class QuestionsController {
         updatedAt: new Date(),
         ...body,
       });
+      if (!question)
+        throw new NotFoundException('No se ha actualizado la pregunta');
       return res.json(question);
     } catch (error) {
-      console.log(error);
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
     }
   }
 
@@ -66,9 +81,48 @@ export class QuestionsController {
   async deleteQuestion(@Res() res: Response, @Param('id') id: string) {
     try {
       const question = await this.questionService.deleteQuestion(id);
+      if (!question)
+        throw new NotFoundException('No se ha encontrado la pregunta');
       res.json({ message: 'Se ha borrado la pregunta' });
     } catch (error) {
-      console.log(error);
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
+    }
+  }
+
+  @Get('domain/:name')
+  async getQuestionsByDomain(
+    @Res() res: Response,
+    @Param('domain') domain: string,
+  ) {
+    try {
+      const questions = await this.questionService.getQuestionsByDomain(domain);
+      if (!questions)
+        throw new NotFoundException(
+          'No se han encontrado las preguntas del dominio especificado',
+        );
+      return res.json(questions);
+    } catch (error) {
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
+    }
+  }
+
+  @Get('exam/:quantity')
+  async getQuestionsForExam(
+    @Res() res: Response,
+    @Param('quantity') quantity: string,
+  ) {
+    try {
+      const questions = await this.questionService.getQuestionsForExam(
+        Number(quantity),
+      );
+      if (!questions)
+        throw new NotFoundException('No se han encontrado las preguntas');
+      res.json(questions);
+    } catch (error) {
+      const errorData = getError(error);
+      return res.status(errorData.statusCode).json(errorData);
     }
   }
 }

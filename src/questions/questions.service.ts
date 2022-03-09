@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Question } from './interfaces/question.interface';
+import { shuffle } from 'underscore';
 @Injectable()
 export class QuestionsService {
   constructor(
@@ -37,5 +38,15 @@ export class QuestionsService {
       { isActive: false },
       { new: true },
     );
+  }
+
+  getQuestionsByDomain(domain: string) {
+    return this.questionModel.find({ domain, isActive: true });
+  }
+
+  async getQuestionsForExam(quantity: number) {
+    const questions = await this.questionModel.find({ isActive: true });
+    const randomQuestions = shuffle(questions).slice(0, quantity);
+    return randomQuestions;
   }
 }
