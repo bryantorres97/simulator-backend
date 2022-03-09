@@ -8,7 +8,6 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { Types } from 'mongoose';
 import { ResponsesPerDayService } from './responses-per-day.service';
 import { getError } from '../common/helpers/errors.helper';
 
@@ -35,7 +34,6 @@ export class ResponsesPerDayController {
         throw new BadRequestException('No se ha podido registrar la respuesta');
       return res.json({ ok: true });
     } catch (error) {
-      console.log(error);
       const errorData = getError(error);
       return res.status(errorData.statusCode).json(errorData);
     }
