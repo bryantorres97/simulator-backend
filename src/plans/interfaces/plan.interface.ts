@@ -1,9 +1,10 @@
 export class Plan {
   _id?: string;
   name: string;
+  questionsPerDay: number;
   pdfsAvailable: number;
-  allowVideos: boolean;
-  hasPremiumClasses: boolean;
+  videosAvailable: number;
+  premiumClasses: number;
   hasWhatsAppGroupAccess: boolean;
   hasSupport: boolean;
   hasFeedback: boolean;
