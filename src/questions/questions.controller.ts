@@ -47,6 +47,7 @@ export class QuestionsController {
   @Post()
   async createQuestion(@Res() res: Response, @Body() body: any) {
     try {
+      console.log(body);
       const question = await this.questionService.createQuestion(body);
       if (!question)
         throw new BadRequestException('No se pudo crear la pregunta');

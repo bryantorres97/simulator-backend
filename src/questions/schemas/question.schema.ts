@@ -13,7 +13,7 @@ export const QuestionSchema = new Schema({
     },
   ],
   answer: { type: String, required: [true, 'Answer is required'] },
-  feedbackUrl: { type: String },
+  feedbackURL: { type: String },
   imageURL: { type: String },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: { type: Date, default: Date.now() },
