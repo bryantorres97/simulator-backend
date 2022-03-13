@@ -37,8 +37,11 @@ export class UsersController {
         throw new BadGatewayException('No se ha podido obtener el usuario');
       return res.json(user);
     } catch (error) {
+      console.log('error');
       const errorData = getError(error);
-      return res.status(errorData.statusCode).json(errorData);
+      return res
+        .status(errorData.statusCode)
+        .json({ errorData: error, ...errorData });
     }
   }
 }
